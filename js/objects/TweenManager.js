@@ -55,3 +55,55 @@ class TweenManager {
         return tween
     }
 }
+
+// MOST PROMISING
+// const factor = 4
+// const repeat = 0
+
+// TweenMax.to([this.reels[0].container, this.reels[1].container, this.reels[2].container, this.reels[3].container], 1 * factor, {
+//     y: 670,
+//     stagger: 0.2 * factor,
+//     // ease: "expo.out",
+//     ease: "none",
+//     onComplete: () => {
+//         // this.reelsComplete(results)
+//         this.reels[0].container.y = -540
+//         this.reels[1].container.y = -540
+//         this.reels[2].container.y = -540
+//         this.reels[3].container.y = -540
+//     },
+// })
+
+// TweenMax.to([this.reels[4].container, this.reels[5].container, this.reels[6].container, this.reels[7].container], 1.87 * factor, {
+//     y: 670,
+//     delay: 0.4 * factor,
+//     repeat,
+//     stagger: 0.2 * factor,
+//     ease: "none",
+//     onComplete: () => {
+//         // this.reelsComplete(results)
+
+//         TweenMax.to([this.reels[0].container, this.reels[1].container, this.reels[2].container, this.reels[3].container], 0.9 * factor, {
+//             y: 2,
+//             stagger: 0.2 * factor,
+//             // ease: "expo.out",
+//             ease: "none",
+//             onComplete: () => {
+//                 this.reelsComplete(results)
+//                 // alert()
+
+//                 for (let i=4; i<this.reels.length; i++)
+//                     this.reels[i].container.y = -540
+//             },
+//         })
+
+//     },
+// })
+
+// TweenMax.to([this.reels[8].container, this.reels[9].container, this.reels[10].container, this.reels[11].container], 1.87 * factor, {
+//     y: 670,
+//     delay: 1.63 * factor,
+//     repeat,
+//     stagger: 0.2 * factor,
+//     ease: "none",
+// })
