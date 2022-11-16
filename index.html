@@ -18,13 +18,28 @@
 			padding: 0;
 			overflow: hidden;
 		}
+
+		#stake {
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			padding: 10px;
+			background-color: purple;
+			border-radius: 5px;
+			border: 1px solid pink;
+		}
+
+		#stake-amount {
+			width: 50px;
+			text-align: center;
+		}
 	</style>
 </head>
 
 <body>
-	<div style="position: absolute; top: 15px; right: 15px;">
-		<input id="stake-amount" style="width: 50px;" type="number" value="2" min="2">
-		<button id="stake-button">Stake</button>
+	<div id="stake">
+		<label for="stake-amount" style="color: white;">Stake:</label>
+		<input id="stake-amount" type="number" value="2" min="2">
 	</div>
 
 	<canvas id="my-canvas"></canvas>

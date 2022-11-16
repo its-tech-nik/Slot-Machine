@@ -192,14 +192,20 @@ window.addEventListener('load', async function() {
         console.error(e)
     }
 
-    const updateStakeButton = document.getElementById('stake-button')
-    updateStakeButton.addEventListener('click', () => {
-        const stakeAmount = document.getElementById('stake-amount').value
-        if (!stakeAmount) {
+    const stakeAmountField = document.getElementById('stake-amount')
+    stakeAmountField.addEventListener('change', () => {
+        // console.log('asdf', stakeAmountField.value)
+        if (!stakeAmountField.value) {
             alert('Please type a stake amount.')
             return
         }
 
-        slotMachine.updatePlayerStake(stakeAmount)
+        if (stakeAmountField.value < 2) {
+            alert('The minimum stake amount is 2.')
+            stakeAmountField.value = 2
+            return
+        }
+
+        slotMachine.updatePlayerStake(stakeAmountField.value)
     })
 })

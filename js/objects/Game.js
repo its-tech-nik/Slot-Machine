@@ -1,15 +1,18 @@
 const REEL_WIDTH = 140
 const SYMBOL_SIZE = 135
+const REWARD_ROW = 4
 
 class Game extends PIXI.Application {
 
     resize = () => {
         this.renderer.resize(window.innerWidth, window.innerHeight + 4)
-        this.playText.x = (window.innerWidth - this.playText.width) / 2;
+        this.playText.x = (window.innerWidth - this.playText.width) / 2
+        this.playText.y = this.screen.height - this.screen.height / 8
         this.reelContainer.x = (this.screen.width - this.reelContainer.width) / 2  + SYMBOL_SIZE / 2
+        this.reelContainer.y =  (this.screen.height - this.reelContainer.height) / 2// 3 * SYMBOL_SIZE / 2
         this.reelContainer.mask = new PIXI.Graphics()
             .beginFill(0xFFFFFF)
-            .drawRect(0,SYMBOL_SIZE * 2, this.screen.width, SYMBOL_SIZE * 3)
+            .drawRect(0,(this.screen.height - SYMBOL_SIZE * 3) / 2, this.screen.width, SYMBOL_SIZE * 3)
             .endFill()
     }
 
@@ -81,7 +84,7 @@ class Game extends PIXI.Application {
 
         this.stage.addChild(this.reelContainer)
         this.reelContainer.x = (this.screen.width - this.reelContainer.width) / 2  + SYMBOL_SIZE / 2
-        this.reelContainer.y =  3 * SYMBOL_SIZE / 2
+        this.reelContainer.y =  (this.screen.height - this.reelContainer.height) / 2
 
         this.stage.addChild(this.winningAmount)
            
@@ -119,7 +122,7 @@ class Game extends PIXI.Application {
         this.reelContainer = new PIXI.Container()
 
         this.playText = new PIXI.Text('Spin the wheels!')
-        this.playerBalanceText = new PIXI.Text(`Balance: ${this.playerBalance}`, {
+        this.playerBalanceText = new PIXI.Text('', {
             fontFamily: 'Arial',
             fontSize: 24,
             fill: 0xffffff,
@@ -133,7 +136,7 @@ class Game extends PIXI.Application {
             align: 'center',
         });
 
-        this.winningAmount = new PIXI.Text('+8', style)
+        this.winningAmount = new PIXI.Text('', style)
         this.winningAmount.visible = true
 
         this.timeline = new TimelineMax()
@@ -195,7 +198,7 @@ class Game extends PIXI.Application {
 
         this.reelContainer.mask = new PIXI.Graphics()
             .beginFill(0xFFFFFF)
-            .drawRect(0,SYMBOL_SIZE * 2, this.screen.width, SYMBOL_SIZE * 3)
+            .drawRect(0,(this.screen.height - SYMBOL_SIZE * 3) / 2, this.screen.width, SYMBOL_SIZE * 3)
             .endFill()
         
         this.playerBalanceText.x = 15
@@ -237,9 +240,6 @@ class Game extends PIXI.Application {
     }
 
     toggleSpinState(state) {
-        const stakeButton = document.getElementById('stake-button')
-        stakeButton.disabled = state ?? !this.spinning
-
         const stakeAmount = document.getElementById('stake-amount')
         stakeAmount.disabled = state ?? !this.spinning
 
@@ -259,7 +259,7 @@ class Game extends PIXI.Application {
             const reel = this.reels[i]
             const extra = Math.floor(Math.random() * 3)
             const targetIndex = reel.map.indexOf(results.symbolIDs[i])
-            const target = 6 * (i + 1) + reel.position + (reel.prevTargetIndex === -1 ? 0 : 6 - reel.prevTargetIndex) + 3 - targetIndex
+            const target = 6 * (i + 1) + reel.position + (reel.prevTargetIndex === -1 ? 0 : 6 - reel.prevTargetIndex) + REWARD_ROW - targetIndex
             const time = 2500 + i * 600 + extra * 600
 
             reel.prevTargetIndex = target % 6
@@ -301,9 +301,9 @@ class Game extends PIXI.Application {
     animate = (delta) => {
         this.tweenManager.update(delta)
 
-        this.playerBalanceText.text = `Balance: ${this.playerBalance}`
-        this.playText.interactive = !this.spinning && this.playerBalance - this.playerStake > 0;
-        this.playText.buttonMode = !this.spinning  && this.playerBalance - this.playerStake > 0;
+        this.playerBalanceText.text = `Your Balance: ${this.playerBalance}`
+        this.playText.interactive = !this.spinning && this.playerBalance - this.playerStake >= 0;
+        this.playText.buttonMode = !this.spinning  && this.playerBalance - this.playerStake >= 0;
         
         for (let i=0; i < this.reels.length; i++) {
             const reel = this.reels[i]
