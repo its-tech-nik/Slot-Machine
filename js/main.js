@@ -203,7 +203,6 @@ window.addEventListener('load', async function() {
         if (stakeAmountField.value < 2) {
             alert('The minimum stake amount is 2.')
             stakeAmountField.value = 2
-            return
         }
 
         slotMachine.updatePlayerStake(stakeAmountField.value)
